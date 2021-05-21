@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TekstitiedostonPilkkoja", "TekstitiedostonPilkkoja\TekstitiedostonPilkkoja.csproj", "{CAA2E725-47F8-481C-AFCC-17CD1240AD0D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CAA2E725-47F8-481C-AFCC-17CD1240AD0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAA2E725-47F8-481C-AFCC-17CD1240AD0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAA2E725-47F8-481C-AFCC-17CD1240AD0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAA2E725-47F8-481C-AFCC-17CD1240AD0D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F999E789-D1C5-44A1-BF15-DCF450BA92D0}
+	EndGlobalSection
+EndGlobal
