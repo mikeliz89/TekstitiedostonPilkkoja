@@ -55,9 +55,11 @@ namespace TekstitiedostonPilkkoja {
 
     private static string GetFileNameFromArgument(string[] args) {
       string inputFileName = "";
-      if(args.Length > 0)
-        if(!string.IsNullOrEmpty(args[0].ToString()))
+      if(args.Length > 0) {
+        if(!string.IsNullOrEmpty(args[0].ToString())) {
           inputFileName = args[0].ToString();
+        }
+      }
       return inputFileName;
     }
 
@@ -102,8 +104,9 @@ namespace TekstitiedostonPilkkoja {
 
     private static int AddLinesToFile(string[] fileLines, int lineCounter, string newOutputFileName) {
       for(int j = 0; j < maxLinesPerFile; j++) {
-        if(fileLines.Length <= lineCounter)
+        if(fileLines.Length <= lineCounter) {
           break;
+        }
         AddLineToFile(fileLines[lineCounter], newOutputFileName);
         lineCounter++;
       }
