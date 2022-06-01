@@ -7,18 +7,34 @@ namespace TekstitiedostonPilkkoja {
 
     /*
      * Konffaa tähän itsellesi sopivat arvot outputfilelle
+     * 
+     * Argumentit exelle 
+     * 1. tiedostonimi, esim KTL_DANSKE_20220531155353.001
+     * 2. rivejä per tiedosto, esim 300 (optional)
      */
-    public const string outputFilePath = @"C:\Temp\pilkotutviitemaksutiedostot";
-    public const string outputFileName = "tiedosto";
-    public const string outputFileSuffix = ".txt";
+    public const string OutputFilePath = @"C:\Temp\pilkotutviitemaksutiedostot";
+    /// <summary>
+    /// Output tiedoston oletusnimi
+    /// </summary>
+    public const string DefaultOutputFileName = "tiedosto";
+    /// <summary>
+    /// Output tiedoston tiedostopääte
+    /// </summary>
+    public const string OutputFileSuffix = ".txt";
+    /// <summary>
+    /// Montako riviä per tiedosto (oletus)
+    /// </summary>
+    public const int DefaultLinesPerFile = 250;
     /// <summary>
     /// Montako riviä per tiedosto
     /// </summary>
-    public const int maxLinesPerFile = 500;
+    public static int LinesPerFile = DefaultLinesPerFile;
 
     static void Main(string[] args) {
 
       string inputFileName = GetInputFileName(args);
+
+      SetMaxLinesPerFileByInput(args);
 
       if(!File.Exists(inputFileName)) {
         Console.WriteLine("Tiedostoa ei löydy annetusta polusta " + inputFileName);
@@ -35,6 +51,12 @@ namespace TekstitiedostonPilkkoja {
 
       Console.WriteLine("Click enter to exit program");
       Console.ReadLine();
+    }
+
+    private static void SetMaxLinesPerFileByInput(string[] args) {
+      if(args.Length > 1) {
+        LinesPerFile = Convert.ToInt32(args[1].ToString());
+      }
     }
 
     private static string GetInputFileName(string[] args) {
@@ -64,14 +86,14 @@ namespace TekstitiedostonPilkkoja {
     }
 
     private static void CreateOutputDirectoryIfNotExists() {
-      if(!Directory.Exists(outputFilePath)) {
-        Directory.CreateDirectory(outputFilePath);
+      if(!Directory.Exists(OutputFilePath)) {
+        Directory.CreateDirectory(OutputFilePath);
       }
     }
 
     private static void DeleteCurrentOutputfiles() {
-      if(Directory.Exists(outputFilePath)) {
-        var directoryInfo = new DirectoryInfo(outputFilePath);
+      if(Directory.Exists(OutputFilePath)) {
+        var directoryInfo = new DirectoryInfo(OutputFilePath);
         foreach(FileInfo file in directoryInfo.GetFiles()) {
           file.Delete();
         }
@@ -94,7 +116,7 @@ namespace TekstitiedostonPilkkoja {
 
       var lineCounter = 0;
       for(int i = 0; i < howManyfilesToCreate; i++) {
-        string newOutputFileName = CalculateNewOutputFileName(i);
+        string newOutputFileName = CalculateNewOutputFileName(i, fileName);
         Console.WriteLine("Creating new file " + newOutputFileName);
         AddFirstLine(newOutputFileName);
         lineCounter = AddLinesToFile(fileLines, lineCounter, newOutputFileName);
@@ -103,7 +125,7 @@ namespace TekstitiedostonPilkkoja {
     }
 
     private static int AddLinesToFile(string[] fileLines, int lineCounter, string newOutputFileName) {
-      for(int j = 0; j < maxLinesPerFile; j++) {
+      for(int j = 0; j < LinesPerFile; j++) {
         if(fileLines.Length <= lineCounter) {
           break;
         }
@@ -122,7 +144,7 @@ namespace TekstitiedostonPilkkoja {
     }
 
     private static int CalculateHowManyFilesToCreate(string[] fileLines) {
-      return (fileLines.Length / maxLinesPerFile) + 1;
+      return (fileLines.Length / LinesPerFile) + 1;
     }
 
     private static string[] GetLinesWithoutHeaderAndFooterLines(string[] allFileLines) {
@@ -131,8 +153,9 @@ namespace TekstitiedostonPilkkoja {
       return linesWithoutHeaderAndFooterLines;
     }
 
-    private static string CalculateNewOutputFileName(int i) {
-      return outputFilePath + "\\" + outputFileName + (i + 1) + outputFileSuffix;
+    private static string CalculateNewOutputFileName(int i, string fileName = "") {
+      var fn = string.IsNullOrEmpty(fileName) ? DefaultOutputFileName : fileName;
+      return OutputFilePath + "\\" + fn + "_" + (i + 1) + OutputFileSuffix;
     }
 
     private static string[] DeleteLastLine(string[] fileLinesExceptFirstAndLast) {
