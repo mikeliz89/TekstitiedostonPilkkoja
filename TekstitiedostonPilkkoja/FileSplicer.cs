@@ -10,6 +10,12 @@ namespace TekstitiedostonPilkkoja {
     /// </summary>
     public const string DefaultOutputFileName = "tiedosto";
 
+    /// <summary>
+    /// Output tiedoston tiedostopääte
+    /// </summary>
+    private const string _outputFileSuffix = ".txt";
+
+    //properties
     public int LinesPerFile {
       get {
         return _linesPerFile;
@@ -30,11 +36,6 @@ namespace TekstitiedostonPilkkoja {
     }
     private string _outputFilePath { get; set; }
 
-    /// <summary>
-    /// Output tiedoston tiedostopääte
-    /// </summary>
-    private const string _outputFileSuffix = ".txt";
-
     public FileSplicer(int linesPerFile, string outputFilePath) {
       _linesPerFile = linesPerFile;
       _outputFilePath = outputFilePath;
@@ -54,9 +55,12 @@ namespace TekstitiedostonPilkkoja {
 
       string[] fileLines = GetLinesWithoutHeaderAndFooterLines(allFileLines);
 
+      Console.WriteLine($"Settings: {_linesPerFile} lines per file, outputFileSuffix = {_outputFileSuffix}");
+      Console.WriteLine($"File has {fileLines.Length} rows (without header and footer lines)");
+
       int howManyfilesToCreate = CalculateHowManyFilesToCreate(fileLines);
 
-      Console.WriteLine($"{howManyfilesToCreate} files to create");
+      Console.WriteLine($"{howManyfilesToCreate} new files to create");
 
       var lineCounter = 0;
       for(int i = 0; i < howManyfilesToCreate; i++) {
@@ -92,14 +96,14 @@ namespace TekstitiedostonPilkkoja {
     }
 
     private static string[] GetLinesWithoutHeaderAndFooterLines(string[] allFileLines) {
-      string[] linesWithoutHeaderAndFooterLines = DeleteFirstLine(allFileLines);
-      linesWithoutHeaderAndFooterLines = DeleteLastLine(linesWithoutHeaderAndFooterLines);
-      return linesWithoutHeaderAndFooterLines;
+      string[] lines = DeleteFirstLine(allFileLines);
+      lines = DeleteLastLine(lines);
+      return lines;
     }
 
     private string CalculateNewOutputFileName(int i, string fileName = "") {
       var fn = string.IsNullOrEmpty(fileName) ? DefaultOutputFileName : fileName;
-      return _outputFilePath + "\\" + fn + "_" + (i + 1) + _outputFileSuffix;
+      return $"{_outputFilePath }\\{fn}_{i + 1}{_outputFileSuffix}";
     }
 
     private static string[] DeleteLastLine(string[] fileLinesExceptFirstAndLast) {
@@ -122,13 +126,11 @@ namespace TekstitiedostonPilkkoja {
     }
 
     private static string GetLastLine(string[] fileLines) {
-      var lastLine = fileLines.Last();
-      return lastLine;
+      return fileLines.Last();
     }
 
     private static string GetFirstLine(string[] fileLines) {
-      var firstLine = fileLines.First(); ;
-      return firstLine;
+      return fileLines.First(); ;
     }
   }
 }
