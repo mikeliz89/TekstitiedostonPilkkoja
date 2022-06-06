@@ -59,6 +59,11 @@ namespace TekstitiedostonPilkkoja {
       Console.WriteLine($"Settings: {_linesPerFile} lines per file, outputFileSuffix = {_outputFileSuffix}");
       Console.WriteLine($"File has {fileLines.Length} rows (without header and footer lines)");
 
+      if(fileLines.Length <= _linesPerFile) {
+        Console.WriteLine($"File has less lines than linesPerFile setting. Returning without splitting.");
+        return;
+      }
+
       int howManyfilesToCreate = CalculateHowManyFilesToCreate(fileLines);
 
       Console.WriteLine($"{howManyfilesToCreate} new files to create");
