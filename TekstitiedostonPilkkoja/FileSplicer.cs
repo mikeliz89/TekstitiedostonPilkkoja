@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace TekstitiedostonPilkkoja {
   public class FileSplicer {
@@ -8,7 +9,7 @@ namespace TekstitiedostonPilkkoja {
     /// <summary>
     /// Output tiedoston oletusnimi
     /// </summary>
-    public const string DefaultOutputFileName = "tiedosto";
+    public const string DefaultOutputFileName = "file";
 
     /// <summary>
     /// Output tiedoston tiedostopääte
@@ -83,6 +84,12 @@ namespace TekstitiedostonPilkkoja {
       return lineCounter;
     }
 
+    private static void AddLineToFile(string line, string fileName) {
+      using(StreamWriter sw = File.AppendText(fileName)) {
+        sw.WriteLine(line);
+      }
+    }
+
     private void AddLastLine(string newOutputFileName) {
       AddLineToFile(lastLine, newOutputFileName);
     }
@@ -115,14 +122,9 @@ namespace TekstitiedostonPilkkoja {
       return fileLines.Skip(1).ToArray();
     }
 
-    private static void AddLineToFile(string line, string fileName) {
-      using(StreamWriter sw = File.AppendText(fileName)) {
-        sw.WriteLine(line);
-      }
-    }
-
     private static string[] ReadAllLinesFromFile(string fileName) {
-      return File.ReadAllLines(fileName);
+      //Lue tiedoston rivit ANSI-enkoodauksella sisään jotta ääkköset säilyvät
+      return File.ReadAllLines(fileName, Encoding.Default);
     }
 
     private static string GetLastLine(string[] fileLines) {
