@@ -45,7 +45,7 @@ namespace TekstitiedostonPilkkoja {
     private string firstLine = "";
     private string lastLine = "";
 
-    public void SpliceFileToNewFiles(string fileName) {
+    public bool SpliceFileToNewFiles(string fileName) {
 
       Console.WriteLine($"Starting to splice file {fileName}");
 
@@ -60,8 +60,8 @@ namespace TekstitiedostonPilkkoja {
       Console.WriteLine($"File has {fileLines.Length} rows (without header and footer lines)");
 
       if(fileLines.Length <= _linesPerFile) {
-        Console.WriteLine($"File has less lines than linesPerFile setting. Returning without splitting.");
-        return;
+        Console.WriteLine($"File has <= lines than linesPerFile setting. Returning without splitting.");
+        return false;
       }
 
       int howManyfilesToCreate = CalculateHowManyFilesToCreate(fileLines);
@@ -76,6 +76,8 @@ namespace TekstitiedostonPilkkoja {
         lineCounter = AddLinesToFile(fileLines, lineCounter, newOutputFileName);
         AddLastLine(newOutputFileName);
       }
+
+      return true;
     }
 
     private int AddLinesToFile(string[] fileLines, int lineCounter, string newOutputFileName) {
@@ -104,7 +106,15 @@ namespace TekstitiedostonPilkkoja {
     }
 
     private int CalculateHowManyFilesToCreate(string[] fileLines) {
-      return (fileLines.Length / _linesPerFile) + 1;
+      if(fileLines.Length == 0 || _linesPerFile <= 0) {
+        return 0;
+      }
+      var howManyFiles = (fileLines.Length / _linesPerFile) + 0;
+      //always at least one file
+      if(howManyFiles == 0) {
+        return 1;
+      }
+      return howManyFiles;
     }
 
     private static string[] GetLinesWithoutHeaderAndFooterLines(string[] allFileLines) {
@@ -137,7 +147,7 @@ namespace TekstitiedostonPilkkoja {
     }
 
     private static string GetFirstLine(string[] fileLines) {
-      return fileLines.First(); ;
+      return fileLines.First();
     }
   }
 }
