@@ -13,3 +13,5 @@ Parametrit:
 1. input-tiedostonnimi
 2. rivejä per output tiedosto
 3. output-kansionimi
+
+Huom! input -tiedoston enkoodauksen tulisi olla ANSI jotta ääkköset säilyvät kunnossa pilkottuihin
