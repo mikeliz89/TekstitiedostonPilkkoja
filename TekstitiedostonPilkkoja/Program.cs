@@ -51,7 +51,7 @@ namespace TekstitiedostonPilkkoja {
 
       //Do the file splices
 
-      var fileSplicer = new FileSplicer(_linesPerFile, _outputFilePath);
+      var fileSplicer = new FileSplicerLib.FileSplicer(_linesPerFile, _outputFilePath);
 
       fileSplicer.SpliceFileToNewFiles(inputFileName);
 

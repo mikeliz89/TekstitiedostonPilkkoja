@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace TekstitiedostonPilkkoja {
+namespace FileSplicerLib {
   public class FileSplicer {
 
     /// <summary>
