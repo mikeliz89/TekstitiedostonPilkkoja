@@ -105,16 +105,16 @@ namespace TekstitiedostonPilkkoja {
       AddLineToFile(firstLine, newOutputFileName);
     }
 
-    private int CalculateHowManyFilesToCreate(string[] fileLines) {
+    public int CalculateHowManyFilesToCreate(string[] fileLines) {
+
       if(fileLines.Length == 0 || _linesPerFile <= 0) {
         return 0;
       }
-      var howManyFiles = (fileLines.Length / _linesPerFile) + 0;
-      //always at least one file
-      if(howManyFiles == 0) {
-        return 1;
+      int fileCount = Math.DivRem(fileLines.Length, _linesPerFile, out int remainder);
+      if(remainder > 0) {
+        fileCount++;
       }
-      return howManyFiles;
+      return fileCount;
     }
 
     private static string[] GetLinesWithoutHeaderAndFooterLines(string[] allFileLines) {
