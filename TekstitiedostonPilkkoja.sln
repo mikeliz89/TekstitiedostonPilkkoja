@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TekstitiedostonPilkkoja", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileSplicerLib", "FileSplicerLib\FileSplicerLib.csproj", "{AEE8846A-F7F9-4F9E-BAB5-022E01E2E4FC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileSplicerLib.Tests", "FileSplicerLib.Tests\FileSplicerLib.Tests.csproj", "{59BA045D-924D-45A5-9255-957EBC909394}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{AEE8846A-F7F9-4F9E-BAB5-022E01E2E4FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEE8846A-F7F9-4F9E-BAB5-022E01E2E4FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEE8846A-F7F9-4F9E-BAB5-022E01E2E4FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59BA045D-924D-45A5-9255-957EBC909394}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59BA045D-924D-45A5-9255-957EBC909394}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59BA045D-924D-45A5-9255-957EBC909394}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59BA045D-924D-45A5-9255-957EBC909394}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
