@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using FileSplicerLib;
 
 namespace TekstitiedostonPilkkoja {
   class Program {
@@ -8,7 +9,7 @@ namespace TekstitiedostonPilkkoja {
      * Konffaa tähän itsellesi sopivat arvot outputfilelle
      * 
      * Argumentit exelle 
-     * 1. tiedostonimi, esim KTL_DANSKE_20220531155353.001
+     * 1. tiedostonimi, esim KTL_DANSKE_20220531155353.001, tai anna * jotta pilkkoo kaikki in-hakemiston tiedostot
      * 2. rivejä per tiedosto, esim 300 (optional). Default 250
      * 3. outputFilePath, esim C:\Temp\pilkotutviitemaksutiedostot (optional). Default C:\Temp\pilkotutviitemaksutiedostot
      */
@@ -28,11 +29,15 @@ namespace TekstitiedostonPilkkoja {
     /// </summary>
     private static bool _deleteCurrentOutputFiles = true;
 
+    private const string ALLFILES = "*";
+
     static void Main(string[] args) {
 
       string inputFileName = GetFileNameByArgs(args);
 
-      if(!File.Exists(inputFileName)) {
+      var spliceAllFiles = inputFileName == ALLFILES ? true : false;
+
+      if(!spliceAllFiles && !File.Exists(inputFileName)) {
         Console.WriteLine("Tiedostoa ei löydy annetusta polusta " + inputFileName);
         Console.WriteLine("Exit");
         Console.ReadLine();
@@ -49,14 +54,24 @@ namespace TekstitiedostonPilkkoja {
         DeleteCurrentOutputfiles(_outputFilePath);
       }
 
-      //Do the file splices
+      var fileSplicer = new FileSplicer(_linesPerFile, _outputFilePath);
 
-      var fileSplicer = new FileSplicerLib.FileSplicer(_linesPerFile, _outputFilePath);
-
-      fileSplicer.SpliceFileToNewFiles(inputFileName);
+      if(spliceAllFiles) {
+        SpliceAllFilesInDirectory(fileSplicer);
+      } else {
+        fileSplicer.SpliceFileToNewFiles(inputFileName);
+      }
 
       Console.WriteLine("Click enter to exit program");
       Console.ReadLine();
+    }
+
+    private static void SpliceAllFilesInDirectory(FileSplicer fileSplicer) {
+      var currentDir = Directory.GetCurrentDirectory();
+      var files = Directory.GetFiles(currentDir + "/in", "*");
+      foreach(var file in files) {
+        fileSplicer.SpliceFileToNewFiles(Path.GetFileName(file));
+      }
     }
 
     private static void SetOutputFilePath(string[] args) {
